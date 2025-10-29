@@ -1,0 +1,627 @@
+:root {
+    --color-fondo-principal: whitesmoke;
+    --radio-borde: 0.5rem;
+    --shadow: 0 0 10px rgba(0,0,0,0.1);
+    --transicion: all 0.3s ease;
+    --escala: scale(1.02);
+}    
+
+body {
+    background-color: var(--color-fondo-principal);
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+header {
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+    padding: 0;
+    height: 6rem;
+}
+#barraDeCarga {
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.5);
+    z-index:1055;
+    text-align:center;
+    color:white;
+    font-size:24px;
+    padding-top:20%;
+}
+.icono-sa {
+    width: auto;
+    height: 3rem;
+}
+.carruselImagen {
+    filter: brightness(30%);
+    width: 100%;
+    height: 100vh; 
+    object-fit: cover;
+}
+.carousel-caption h1 {
+    color: white;
+    text-align: center;
+}
+.carousel-caption p {
+    color: white;
+    font-size: 1rem;
+    text-align: justify;
+}
+.center-content {
+    display: flex;
+    justify-content: center;
+}
+#filosofiaSec h1 {
+    color: white;
+    text-align: center;
+}
+#filosofiaSec p {
+    color: white;
+    font-size: 1rem;
+    text-align: justify;
+}
+#imgFilosofia {
+    width: 100%; 
+    height: 90vh; 
+    object-fit: cover;
+}
+#destacadosSec {
+    padding-top: 1rem;
+    background: linear-gradient(#D8D8D9, var(--color-fondo-principal));
+}
+#destacadosSec h1 {
+    color: black;
+    text-align: center;  
+}
+#bgDestacados h1 {
+    color: black;
+    text-align: center;
+}
+.card {
+    height: 100%;
+}
+.card-img-top {
+    display: block;
+    object-fit: cover;
+    width: 100%;
+    height: 20rem;
+}
+.btnCard {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+#mapaArt h2 {
+    color: white;
+    text-align: center;
+}
+#mapaArt p {
+    color: white;
+    font-size: 1rem;
+    text-align: justify;
+}
+#mapIndex {
+    padding: 0;
+}
+#mapIndex iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+hr {
+    border: none;
+    height: 4px;
+    background-color: black;
+    margin: 0;
+}
+#btnDorado {
+    position: fixed;
+    top: 7rem;
+    right: 1rem;
+    width: auto;
+    padding: 0.5rem 0.5rem;
+    border-radius: var(--radio-borde);
+    text-align: center;
+    z-index: 100;
+}
+#btnFavoritosMovil {
+    position: fixed;
+    top: 0;
+    right: 9rem;
+    width: 4rem;
+    height: 4rem;
+    border-radius: var(--radio-borde);
+    text-align: center;
+    z-index: 100;
+}
+#menusArt {
+    padding-top: 7rem;
+}
+#menusArt p {
+    color: black;
+}
+#menuTabContenido p {
+    color: black;
+}
+.menuCard {
+    transition: var(--transicion) ;
+}
+.menuCard:hover {
+    transform: var(--escala);
+    box-shadow: var(--shadow);
+}
+#btnGroupMenu button {
+    width: 50%;
+    margin: 1rem;
+    padding: 0;
+    border-radius: var(--radio-borde);
+}
+#btnCarrito {
+    border-radius: var(--radio-borde);
+}
+#btnCarritoMovil {
+    position: fixed;
+    top: 0;
+    right: 4rem;
+    width: 4rem;
+    height: 4rem;
+    border-radius: var(--radio-borde);
+    text-align: center;
+    z-index: 100;
+}
+.btnAdmin {
+    color: white;
+    border: 2px solid white;
+    border-radius: var(--radio-borde);
+}
+.estiloOffcanvas .offcanvas-header {
+    background-color: var(--color-fondo-principal);
+}
+.iconBtn {
+    border-radius: var(--radio-borde);
+    padding: 0.5rem 0.8rem;
+    margin: 0 0.5rem;
+}
+.estiloOffcanvas .offcanvas-footer {
+    background-color: var(--color-fondo-principal);
+    padding: 1rem 0 1rem 0;
+}
+.estiloOffcanvas .offcanvas-footer button {
+    margin: 0;
+    padding: 0.5rem;
+    border-radius: var(--radio-borde);
+}
+#carritoCard {
+    width: 100%;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    border-radius: var(--radio-borde);
+    background-color: white;
+    transition: var(--transicion);
+}
+#carritoCard:hover {
+    background-color: var(--color-fondo-principal);
+    transform: var(--escala);
+}
+#carritoCard .btn-group button {
+    text-align: center;
+}
+#pedidosArt {
+    padding: 7rem 0rem 3rem 0rem;
+    z-index: 2;
+}
+#menusSec {
+    padding: 1rem 1rem;
+}
+.pedidosCard {
+    width: 100%;
+    border: 1px solid white;
+    border-radius: var(--radio-borde);
+    border: none;
+    overflow: hidden;
+    transition: var(--transicion);
+}
+.pedidosCard:hover {
+    transform: var(--escala);
+    box-shadow: var(--shadow);
+}
+.pedidosCard button {
+    width: 100%;
+    border-radius: var(--radio-borde);
+    display: block;
+}
+#favoritosArt {
+    padding: 7rem 0rem 3rem 0rem;
+    z-index: 2;
+}
+#favoritosCard {
+    width: 100%;
+    height: 20rem;
+    padding: 0;
+    margin: 0;
+    border-radius: var(--radio-borde);
+    background-color: white;
+    transition: var(--transicion);
+}
+#favoritosCard:hover {
+    background-color: var(--color-fondo-principal);
+    transform: var(--escala);
+}
+#favoritosCard img {
+    width: 100%;
+    height: 100%;
+    max-height: 20rem;
+    object-fit: cover;
+    border-radius: var(--radio-borde);
+}
+#favoritosCard button {
+    border-radius: var(--radio-borde);
+}
+#btnReservasMovil {
+    position: fixed;
+    top: 0;
+    right: 9rem;
+    width: 4rem;
+    height: 4rem;
+    border-radius: var(--radio-borde);
+    text-align: center;
+    z-index: 100;
+}
+#reservasArt {
+    padding: 6rem 0 5rem 0;
+}
+#reservasArt form {
+    max-width: 100%;
+    background-color: white;
+    padding: 1rem;
+    border-radius: var(--radio-borde);
+    box-shadow: var(--shadow);
+    margin: 1rem 0 1rem 0;
+}
+#reservasArt input {
+    display: block;
+    width: 100%;
+    margin: 0.5rem 0;
+    border-radius: var(--radio-borde);
+    font-size: small;
+}
+#reservasArt select {
+    display: block;
+    width: 100%;
+    margin: 0.5rem 0;
+    border-radius: var(--radio-borde);
+    font-size: small;
+}
+#reservasArt button {
+    border-radius: var(--radio-borde);
+    font-size: small;
+}
+#bgReservas {
+    padding-top: 6rem;
+    margin: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-image: url("../img/bgImg/reservaBg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: brightness(30%);
+}
+#ubicacionArt {
+    padding-top: 6rem;
+}
+#ubicacionArt h2 {
+    color: white;
+}
+#mapUbicacion {
+    position: relative;
+    height: 85vh;
+    padding: 0;
+    z-index: 1;
+}
+#mapUbicacion button {
+    z-index: 3;
+    border-radius: var(--radio-borde);
+}
+#mapUbicacion iframe {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+}
+#mapInfo {
+    top: 0;
+    left: 0;
+    width: 25rem;
+    padding: 1.5rem;
+    z-index: 2;
+    overflow-y: auto;
+}
+#mapInfoMobile {
+    position: absolute; 
+    top: 4rem; 
+    left: 5%; 
+    width: 90%; 
+    z-index: 2;
+    margin-top: 0.5rem;
+}
+#nosotrosArt {
+    padding: 7rem 0rem 3rem 0rem;
+    min-height: calc(100vh - 140px);
+    background-color: var(--color-fondo-principal);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+#nosotrosArt h1 {
+    font-size: 2.8em;
+    color: #33140c;
+    margin-bottom: 20px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+#nosotrosArt h2 {
+    font-size: 2em;
+    color: #884912;
+    margin: 40px 0 20px;
+    text-align: center;
+}
+#nosotrosArt p {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.15em;
+    line-height: 1.8;
+    text-align: justify;
+    color: #4a4a4a;
+}
+.historia-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+  justify-items: center;
+}
+.historia-img {
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  text-align: center;
+}
+.historia-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease;
+}
+.historia-img img:hover {
+  transform: scale(1.02);
+}
+.historia-img figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.95rem;
+  color: #555;
+  font-style: italic;
+  line-height: 1.4;
+}
+.visually-hidden-focusable {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+.visually-hidden-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 1rem;
+  padding: 0.5rem 1rem;
+  background: #f8f9fa;
+  border: 2px solid #000;
+  border-radius: 5px;
+  z-index: 1000;
+}
+#listValores {
+    list-style: none;
+    padding-left: 0;
+    max-width: 700px;
+    margin: 0 auto;
+}
+#listValores li {
+    background: linear-gradient(to right, #fbeee6, #fff5ee);
+    border-left: 5px solid #884912;
+    padding: 12px 18px;
+    margin-bottom: 12px;
+    font-weight: 500;
+    border-radius: var(--radio-borde);
+    box-shadow: var(--shadow);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+#listValores li:hover {
+    background-color: #fae0d0;
+    transform: translateX(5px);
+}
+footer {
+    margin-top: auto;
+    font-size: large;
+}
+footer h2 {
+    color: white;
+    margin: 0;
+}
+footer a {
+    color: gray;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 1rem;
+    transition: var(--transicion);
+}
+footer a:hover {
+    transform: scale(1.08);
+    color: white;
+}
+footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Estilos administrador */
+
+#loginAdmin {
+    padding-top: 6rem;
+    margin: 0;
+    width: 100%;
+    height: 100vh;
+}
+#loginAdmin form {
+    max-width: 100%;
+    background-color: white;
+    padding: 1rem;
+    border-radius: var(--radio-borde);
+    box-shadow: var(--shadow);
+    margin: 1rem 0 1rem 0;
+}
+#loginAdmin input {
+    display: block;
+    width: 100%;
+    margin: 0.5rem 0;
+    border-radius: var(--radio-borde);
+    font-size: small;
+}
+#loginAdmin button {
+    border-radius: var(--radio-borde);
+    font-size: small;
+}
+#adminPrincipal {
+    padding-top: 6rem;
+    margin: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+}
+#adminPrincipal h1, 
+#adminPrincipal p {
+    color: white;
+}
+#bgAdmin {
+    padding-top: 6rem;
+    margin: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-image: url("../img/bgImg/reservaBg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: brightness(30%);
+}
+#bgAdminMenus {
+    padding-top: 6rem;
+    margin: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+    position: fixed;
+    background-image: url("../img/bgImg/menuAdminBg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: brightness(30%);
+}
+#formMenus {
+    padding-top: 6rem;
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+}
+#formularioIngresoMenu {
+    max-width: 100%;
+    background-color: white;
+    padding: 1rem;
+    border-radius: var(--radio-borde);
+    box-shadow: var(--shadow);
+    margin: 1rem 0 1rem 0;
+}
+#formularioIngresoMenu .inputForm,
+#formularioIngresoMenu select {
+    display: block;
+    width: 100%;
+    margin: 0.5rem 0;
+    border: 2px solid black;
+    border: none;
+    border-radius: var(--radio-borde);
+    font-size: small;
+}
+.input-group {
+    width: 100%;
+    margin: 0.5rem 0;
+    border: 2px solid black;
+    border: none;
+    border-radius: var(--radio-borde);
+    overflow: hidden;
+}
+.input-group .form-control,
+.input-group .input-group-text {
+    font-size: small;
+}
+#formularioIngresoMenu label {
+    font-size: small;
+}
+#formularioIngresoMenu button {
+    width: 30,5%;
+    margin-top: 0.2rem;
+    border: 1px solid black;
+    border: none;
+    border-radius: var(--radio-borde);
+}
+#btnGroup {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+#formularioIngresoMenu h4 {
+    margin: 0;
+    padding: 1rem;
+    text-align: center;
+    font-size: medium;
+}
+#tablaMenus {
+    max-width: 100%;
+    background-color: white;
+    border: 2px solid black;
+    border: none;
+    border-radius: var(--radio-borde);
+    box-shadow: var(--shadow);
+    margin: 1rem 0 1rem 0;
+    border-collapse: separate; 
+    overflow: hidden;
+}
+#tablaMenus th {
+    font-size: small;
+}
+#tablaMenus input {
+    text-align: center;
+    width: 6rem;
+    margin-top: 0.5rem;
+    border: 1px solid black;
+    border: none;
+    border-radius: var(--radio-borde);
+}
