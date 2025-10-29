@@ -21,8 +21,9 @@
         $_SESSION['correoUsr']=$correoUsuario;
     }
 
-    // Si aún no hay correo, mostrar formulario
     if (empty($correoUsuario)) {
+
+    include("templates/header.php");
 ?>
 
 <main class="container" id="procesarVentaForm">
@@ -64,8 +65,6 @@
     $sentenciaSQL->execute();
 
     unset($_SESSION['CARRITO']);
-
-
 
     include("templates/header.php");
 ?>
