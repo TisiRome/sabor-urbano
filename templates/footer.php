@@ -82,6 +82,13 @@
                     }
                 }
 
+                if (accion==='Pagar') {
+                    if (!confirm('¿Deseas confirmar la compra?')) {
+                        event.preventDefault();
+                        return;
+                    }
+                }
+
                 if (accion==='Vaciar') {
                     if (!confirm('¿Seguro que querés vaciar todo el carrito?')) {
                         event.preventDefault();

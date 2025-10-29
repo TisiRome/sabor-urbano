@@ -110,6 +110,10 @@ if (isset($_POST['btnAccion'])) {
             }
             break;
 
+        case 'Pagar':
+            header("Location:procesar_venta.php");
+            break;
+
         case 'Vaciar':
             unset($_SESSION['CARRITO']);
             break;

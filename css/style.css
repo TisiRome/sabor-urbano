@@ -198,6 +198,37 @@ hr {
     padding: 0.5rem;
     border-radius: var(--radio-borde);
 }
+#procesarVentaComp {
+    padding: 10rem 0 5rem 0;
+}
+#procesarVentaComp .alert {
+    border-radius: var(--radio-borde);
+    box-shadow: var(--shadow);
+}
+#procesarVentaForm {
+    padding: 10rem 0 5rem 0;
+}
+#procesarVentaForm .card {
+    border-radius: var(--radio-borde);
+    box-shadow: var(--shadow);
+}
+#procesarVentaForm form {
+    max-width: 100%;
+    background-color: white;
+    padding: 1rem;
+    margin: 1rem 0 1rem 0;
+}
+#procesarVentaForm input {
+    display: block;
+    width: 100%;
+    margin: 0.5rem 0;
+    border-radius: var(--radio-borde);
+    font-size: small;
+}
+#procesarVentaForm button {
+    border-radius: var(--radio-borde);
+    font-size: small;
+}
 #carritoCard {
     width: 100%;
     height: auto;
