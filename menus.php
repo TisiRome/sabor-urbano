@@ -5,7 +5,7 @@
     include("favoritos.php");
     include("templates/header.php"); 
 
-    $sentencia = $conexion->prepare("SELECT m.*, c.nombreCtgia FROM menus m LEFT JOIN categorias c ON m.categoriaMenu = c.idCtgia ORDER BY c.nombreCtgia, m.nombreMenu");
+    $sentencia=$conexion->prepare("SELECT m.*, c.nombreCtgia FROM menus m LEFT JOIN categorias c ON m.categoriaMenu = c.idCtgia ORDER BY c.nombreCtgia, m.nombreMenu");
     $sentencia->execute();
     $listaMenus=$sentencia->fetchAll(PDO::FETCH_ASSOC);
 
@@ -33,7 +33,7 @@
         $categoriasDisponibles[$categoria][]=$menu;
     }
 
-    // Ordena según el "orden" de la base
+    // Orden deseado de categorías.
     $categoriasOrdenadas=[];
     foreach ($listaCategorias as $categoriaDB) {
         $nombreCat=trim($categoriaDB['nombreCtgia']);
@@ -41,7 +41,7 @@
         if (isset($categoriasDisponibles[$nombreCat])) {
             $categoriasOrdenadas[$nombreCat]=$categoriasDisponibles[$nombreCat];
         } else {
-            $categoriasOrdenadas[$nombreCat]=[]; // si querés ver categoría vacía
+            $categoriasOrdenadas[$nombreCat]=[];
         }
     }
 

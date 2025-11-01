@@ -4,14 +4,18 @@
     include("templates/sesion.php");
     include("templates/header.php");
     
-    $sentencia=$conexion->prepare("SELECT * FROM menus ORDER BY categoriaMenu, nombreMenu");
+    $sentencia=$conexion->prepare("SELECT m.*, c.nombreCtgia FROM menus m LEFT JOIN categorias c ON m.categoriaMenu = c.idCtgia ORDER BY c.nombreCtgia, m.nombreMenu");
     $sentencia->execute();
     $listaMenus=$sentencia->fetchAll(PDO::FETCH_ASSOC);
+
+    $sentenciaSQL=$conexion->prepare("SELECT * FROM categorias ORDER BY orden ASC, nombreCtgia ASC");
+    $sentenciaSQL->execute();
+    $listaCategorias=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 
     // Crea el array asociativo de categorías.
     $categoriasDisponibles=[];
     foreach ($listaMenus as $menu) {
-        $categoria=trim($menu['categoriaMenu']);
+        $categoria=trim($menu['nombreCtgia']);
         if (!isset($categoriasDisponibles[$categoria])) {
             $categoriasDisponibles[$categoria]=[];
         }
@@ -19,22 +23,15 @@
     }
 
     // Orden deseado de categorías.
-    $ordenDeseado=['Entradas', 'Principales', 'Postres', 'Bebidas'];
     $categoriasOrdenadas=[];
+    foreach ($listaCategorias as $categoriaDB) {
+        $nombreCat=trim($categoriaDB['nombreCtgia']);
 
-    foreach ($ordenDeseado as $categoriaDeseada) {
-        foreach ($categoriasDisponibles as $categoriaBD => $menus) {
-            if (strtolower(trim($categoriaBD))==strtolower(trim($categoriaDeseada))) {
-                $categoriasOrdenadas[$categoriaDeseada]=$menus;
-                unset($categoriasDisponibles[$categoriaBD]);
-                break;
-            }
+        if (isset($categoriasDisponibles[$nombreCat])) {
+            $categoriasOrdenadas[$nombreCat]=$categoriasDisponibles[$nombreCat];
+        } else {
+            $categoriasOrdenadas[$nombreCat]=[];
         }
-    }
-
-    // Agrega categorías no contempladas al final.
-    foreach ($categoriasDisponibles as $categoriaBD => $menus) {
-        $categoriasOrdenadas[$categoriaBD]=$menus;
     }
 ?>
 
