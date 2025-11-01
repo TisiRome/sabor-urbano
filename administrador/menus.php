@@ -124,6 +124,10 @@
     $sentenciaSQL=$conexion->prepare("SELECT * FROM menus");
     $sentenciaSQL->execute();
     $listaMenus=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
+
+    $sentenciaSQL=$conexion->prepare("SELECT * FROM categorias");
+    $sentenciaSQL->execute();
+    $listaCategorias=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <div id="bgAdminMenus"></div>
@@ -155,17 +159,12 @@
                         <select class="form-select inputForm" required name="txtCategoriaMenu">
                             <option selected>
                                 <?php 
-                                    if ($txtCategoriaMenu==""){
-                                        echo "Seleccione una categoría para el menú";
-                                    } else {
-                                        echo $txtCategoriaMenu;
-                                    }
+                                    echo $txtCategoriaMenu==="" ? "Seleccione una categoría para el menú" : htmlspecialchars($txtCategoriaMenu, ENT_QUOTES, 'UTF-8');
                                 ?>
                             </option>
-                            <option value="Entradas">Entradas</option>
-                            <option value="Principales">Principales</option>
-                            <option value="Postres">Postres</option>
-                            <option value="Bebidas">Bebidas</option>
+                                <?php foreach ($listaCategorias as $categoria) {?>
+                                    <option value="<?php echo $categoria['nombreCtgia']; ?>"><?php echo htmlspecialchars($categoria['nombreCtgia'], ENT_QUOTES, 'UTF-8'); ?></option>
+                                <?php } ?>
                         </select>
                     </div>
 
@@ -212,6 +211,23 @@
             </div>
         </div>
 
+        <div class="row justify-content-center my-4">
+            <div class="col-md-5">
+                <input type="text" id="buscador" class="form-control bg-light" placeholder="Buscar menús...">
+            </div>
+
+            <div class="col-md-3">
+                <select id="filtroCategoria" class="form-select bg-light">
+                    <option value="">Todas las categorías</option>
+                    <?php foreach ($listaCategorias as $categoria) { ?>
+                        <option value="<?php echo htmlspecialchars($categoria['nombreCtgia'], ENT_QUOTES, 'UTF-8'); ?>">
+                            <?php echo htmlspecialchars($categoria['nombreCtgia'], ENT_QUOTES, 'UTF-8'); ?>
+                        </option>
+                    <?php } ?>
+                </select>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md">
                 <table id="tablaMenus" class="table text-center">
@@ -225,9 +241,9 @@
                     <th scope="col">Imagen</th>
                 </tr>
                 <?php foreach ($listaMenus as $menu){?>
-                <tr>
+                <tr class="filaMenus">
                     <td><?php echo htmlspecialchars($menu['idMenu'], ENT_QUOTES, 'UTF-8'); ?></td>
-                    <td>
+                    <td class="nombreMenus">
                         <?php 
                             if ($menu['destacado']==1){
                                 echo "<i class='fa-solid fa-star'></i> ".htmlspecialchars($menu['nombreMenu'], ENT_QUOTES, 'UTF-8');
@@ -236,7 +252,7 @@
                             }
                         ?>
                     </td>
-                    <td><?php echo htmlspecialchars($menu['descripcionMenu'], ENT_QUOTES, 'UTF-8'); ?></td>
+                    <td class="descripcionMenus"><?php echo htmlspecialchars($menu['descripcionMenu'], ENT_QUOTES, 'UTF-8'); ?></td>
                     <td><?php echo htmlspecialchars($menu['categoriaMenu'], ENT_QUOTES, 'UTF-8'); ?></td>
                     <td>$<?php echo htmlspecialchars($menu['precioMenu'], ENT_QUOTES, 'UTF-8'); ?></td>
                     <td><?php echo htmlspecialchars($menu['imgMenu'], ENT_QUOTES, 'UTF-8'); ?></td>
@@ -255,9 +271,37 @@
                 </thead>
                 </table>
             </div>
-
         </div>
     </div>
 </main>
+
+<script>
+function filtrarMenu() {
+    const texto = document.getElementById("buscador").value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,"");
+
+    const categoriaSeleccionada = document.getElementById("filtroCategoria").value.toLowerCase();
+
+    document.querySelectorAll(".filaMenus").forEach(function(fila) {
+
+        const nombre = fila.querySelector(".nombreMenus").innerText.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,"");
+
+        const descripcion = fila.querySelector(".descripcionMenus").innerText.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,"");
+
+        const categoria = fila.children[3].innerText.toLowerCase();
+
+        // Condiciones del filtro
+        const coincideTexto = nombre.includes(texto) || descripcion.includes(texto);
+        const coincideCategoria = categoriaSeleccionada === "" || categoria === categoriaSeleccionada;
+
+        // Mostrar/ocultar
+        fila.style.display = (coincideTexto && coincideCategoria) ? "" : "none";
+    });
+}
+
+// Escuchadores
+document.getElementById("buscador").addEventListener("keyup", filtrarMenu);
+document.getElementById("filtroCategoria").addEventListener("change", filtrarMenu);
+</script>
+
 
 <?php include("templates/footer.php"); ?>

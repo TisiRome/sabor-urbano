@@ -9,6 +9,10 @@
     $sentencia->execute();
     $listaMenus=$sentencia->fetchAll(PDO::FETCH_ASSOC);
 
+    $sentenciaSQL=$conexion->prepare("SELECT * FROM categorias");
+    $sentenciaSQL->execute();
+    $listaCategorias=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
+
     //Paginación de menús.
     $registrosPorPagina=3; 
     $pagina=isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
@@ -55,12 +59,11 @@
     }
 
     //Crea el array asociativo de los textos de cada categoría.
-    $textosCategorias=[
-        'Entradas' => 'Comenzá tu experiencia con nuestras entradas: opciones frescas y sabrosas ideales para abrir el apetito. Desde clásicos hasta propuestas originales que marcan el tono de una comida inolvidable.',
-        'Principales' => 'El corazón de nuestra cocina. Disfrutá de una variedad de platos principales cuidadosamente elaborados con ingredientes seleccionados y el toque justo de creatividad urbana.',
-        'Postres' => 'Cerrá con broche de oro. Nuestros postres combinan dulzura y estilo en cada bocado, perfectos para dejarte un recuerdo delicioso de tu visita.',
-        'Bebidas' => 'Refrescá tu momento con nuestra selección de bebidas: desde opciones clásicas hasta cócteles y jugos gourmet que acompañan perfectamente cada plato.'
-    ];
+
+    $textosCategorias=[];
+    foreach ($listaCategorias as $categoria) {
+        $textosCategorias[$categoria['nombreCtgia']]=$categoria['descripcionCtgia'];
+    }
 
     //Las categorías no contempladas en el array de los textos, muestran un texto por defecto.
     function obtenerTextoPorDefecto($categoria) {

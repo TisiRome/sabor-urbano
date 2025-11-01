@@ -19,6 +19,7 @@
     <title>Administrador</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../../img/icon/saborurbano-white.ico">
 </head>
 <body>
     <header>
@@ -40,6 +41,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="menus.php"><i class="fa-solid fa-pizza-slice"></i> Menús</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="categorias.php"><i class="fa-solid fa-list-ul"></i> Categorías</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="../index.php"><i class="fa-solid fa-eye"></i> Ver sitio web</a>
