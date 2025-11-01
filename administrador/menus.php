@@ -24,7 +24,7 @@
                 $sentenciaSQL=$conexion->prepare("INSERT INTO menus (nombreMenu, descripcionMenu, categoriaMenu, precioMenu, destacado, imgMenu) VALUES (:nombreMenu, :descripcionMenu, :categoriaMenu, :precioMenu, :destacado, :imgMenu);");
                 $sentenciaSQL->bindParam(':nombreMenu',$txtNombreMenu);
                 $sentenciaSQL->bindParam(':descripcionMenu',$txtDescMenu);
-                $sentenciaSQL->bindParam(':categoriaMenu',$txtCategoriaMenu);
+                $sentenciaSQL->bindParam(':categoriaMenu', $txtCategoriaMenu, PDO::PARAM_INT);
                 $sentenciaSQL->bindParam(':precioMenu',$txtPrecioMenu);
                 $sentenciaSQL->bindParam(':destacado', $txtDestacado);
 
@@ -49,7 +49,7 @@
                 $sentenciaSQL->bindParam(':idMenu',$txtIDMenu); 
                 $sentenciaSQL->bindParam(':nombreMenu',$txtNombreMenu);
                 $sentenciaSQL->bindParam(':descripcionMenu',$txtDescMenu); 
-                $sentenciaSQL->bindParam(':categoriaMenu',$txtCategoriaMenu);  
+                $sentenciaSQL->bindParam(':categoriaMenu', $txtCategoriaMenu, PDO::PARAM_INT);  
                 $sentenciaSQL->bindParam(':precioMenu',$txtPrecioMenu);
                 $sentenciaSQL->bindParam(':destacado', $txtDestacado);
                 $sentenciaSQL->execute();
@@ -121,11 +121,11 @@
         }
     }
 
-    $sentenciaSQL=$conexion->prepare("SELECT * FROM menus");
+    $sentenciaSQL=$conexion->prepare("SELECT m.*, c.nombreCtgia FROM menus m LEFT JOIN categorias c ON m.categoriaMenu = c.idCtgia ORDER BY m.idMenu DESC");
     $sentenciaSQL->execute();
     $listaMenus=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
-
-    $sentenciaSQL=$conexion->prepare("SELECT * FROM categorias");
+    
+    $sentenciaSQL=$conexion->prepare("SELECT * FROM categorias ORDER BY orden ASC, nombreCtgia ASC");
     $sentenciaSQL->execute();
     $listaCategorias=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -157,14 +157,18 @@
 
                     <div class="form-group">
                         <select class="form-select inputForm" required name="txtCategoriaMenu">
-                            <option selected>
+                            <option selected value="<?php echo $txtCategoriaMenu; ?>">
                                 <?php 
-                                    echo $txtCategoriaMenu==="" ? "Seleccione una categoría para el menú" : htmlspecialchars($txtCategoriaMenu, ENT_QUOTES, 'UTF-8');
+                                    foreach ($listaCategorias as $catTemp) {
+                                        if ($catTemp['idCtgia'] == $txtCategoriaMenu) {
+                                            echo htmlspecialchars($catTemp['nombreCtgia'], ENT_QUOTES, 'UTF-8');
+                                        }
+                                    }
                                 ?>
                             </option>
-                                <?php foreach ($listaCategorias as $categoria) {?>
-                                    <option value="<?php echo $categoria['nombreCtgia']; ?>"><?php echo htmlspecialchars($categoria['nombreCtgia'], ENT_QUOTES, 'UTF-8'); ?></option>
-                                <?php } ?>
+                            <?php foreach ($listaCategorias as $categoria) {?>
+                                <option value="<?php echo $categoria['idCtgia']; ?>"><?php echo htmlspecialchars($categoria['nombreCtgia'], ENT_QUOTES, 'UTF-8'); ?></option>
+                            <?php } ?>
                         </select>
                     </div>
 
@@ -220,7 +224,7 @@
                 <select id="filtroCategoria" class="form-select bg-light">
                     <option value="">Todas las categorías</option>
                     <?php foreach ($listaCategorias as $categoria) { ?>
-                        <option value="<?php echo htmlspecialchars($categoria['nombreCtgia'], ENT_QUOTES, 'UTF-8'); ?>">
+                        <option value="<?php echo $categoria['idCtgia']; ?>">
                             <?php echo htmlspecialchars($categoria['nombreCtgia'], ENT_QUOTES, 'UTF-8'); ?>
                         </option>
                     <?php } ?>
@@ -241,7 +245,7 @@
                     <th scope="col">Imagen</th>
                 </tr>
                 <?php foreach ($listaMenus as $menu){?>
-                <tr class="filaMenus">
+                <tr class="filaMenus" data-categoria="<?php echo $menu['categoriaMenu']; ?>">
                     <td><?php echo htmlspecialchars($menu['idMenu'], ENT_QUOTES, 'UTF-8'); ?></td>
                     <td class="nombreMenus">
                         <?php 
@@ -253,7 +257,7 @@
                         ?>
                     </td>
                     <td class="descripcionMenus"><?php echo htmlspecialchars($menu['descripcionMenu'], ENT_QUOTES, 'UTF-8'); ?></td>
-                    <td><?php echo htmlspecialchars($menu['categoriaMenu'], ENT_QUOTES, 'UTF-8'); ?></td>
+                    <td><?php echo htmlspecialchars($menu['nombreCtgia'], ENT_QUOTES, 'UTF-8'); ?></td>
                     <td>$<?php echo htmlspecialchars($menu['precioMenu'], ENT_QUOTES, 'UTF-8'); ?></td>
                     <td><?php echo htmlspecialchars($menu['imgMenu'], ENT_QUOTES, 'UTF-8'); ?></td>
                     <td>
@@ -287,7 +291,7 @@ function filtrarMenu() {
 
         const descripcion = fila.querySelector(".descripcionMenus").innerText.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,"");
 
-        const categoria = fila.children[3].innerText.toLowerCase();
+        const categoria = fila.dataset.categoria;
 
         // Condiciones del filtro
         const coincideTexto = nombre.includes(texto) || descripcion.includes(texto);

@@ -7,6 +7,7 @@
     $txtIDCategoria=filter_input(INPUT_POST, 'txtIDCategoria', FILTER_SANITIZE_NUMBER_INT);
     $txtNombreCategoria=htmlspecialchars($_POST['txtNombreCategoria'] ?? '', ENT_QUOTES, 'UTF-8');
     $txtDescCategoria=htmlspecialchars($_POST['txtDescCategoria'] ?? '', ENT_QUOTES, 'UTF-8');
+    $txtOrdenCategoria=filter_input(INPUT_POST, 'txtOrdenCategoria', FILTER_SANITIZE_NUMBER_INT);
     $txtAccion=(isset($_POST['btnAccion'])) ? $_POST['btnAccion']:"";
 
     if (isset($_POST['btnAccion'])) {
@@ -17,9 +18,10 @@
 
         switch ($txtAccion) {
             case 'Agregar':
-                $sentenciaSQL=$conexion->prepare("INSERT INTO categorias (nombreCtgia, descripcionCtgia) VALUES (:nombreCtgia, :descripcionCtgia);");
+                $sentenciaSQL=$conexion->prepare("INSERT INTO categorias (nombreCtgia, descripcionCtgia, orden) VALUES (:nombreCtgia, :descripcionCtgia, :orden);");
                 $sentenciaSQL->bindParam(':nombreCtgia',$txtNombreCategoria);
                 $sentenciaSQL->bindParam(':descripcionCtgia',$txtDescCategoria);
+                $sentenciaSQL->bindParam(':orden',$txtOrdenCategoria);
                 $sentenciaSQL->execute();
                 
                 $_SESSION['MENSAJE']="Categoría agregada exitosamente.";
@@ -27,10 +29,11 @@
                 exit;
 
             case 'Modificar':
-                $sentenciaSQL=$conexion->prepare("UPDATE categorias SET nombreCtgia=:nombreCtgia, descripcionCtgia=:descripcionCtgia WHERE idCtgia=:idCtgia");
+                $sentenciaSQL=$conexion->prepare("UPDATE categorias SET nombreCtgia=:nombreCtgia, descripcionCtgia=:descripcionCtgia, orden=:orden WHERE idCtgia=:idCtgia");
                 $sentenciaSQL->bindParam(':idCtgia',$txtIDCategoria);
                 $sentenciaSQL->bindParam(':nombreCtgia',$txtNombreCategoria);
                 $sentenciaSQL->bindParam(':descripcionCtgia',$txtDescCategoria);
+                $sentenciaSQL->bindParam(':orden',$txtOrdenCategoria);
                 $sentenciaSQL->execute();
 
                 $_SESSION['MENSAJE']="Categoría modificada con éxito.";
@@ -48,6 +51,7 @@
                 $categoria=$sentenciaSQL->fetch(PDO::FETCH_LAZY);
                 $txtNombreCategoria=$categoria['nombreCtgia'];
                 $txtDescCategoria=$categoria['descripcionCtgia'];
+                $txtOrdenCategoria=$categoria['orden'];
                 break;
             
             case 'Borrar':
@@ -61,7 +65,7 @@
         }
     }
 
-    $sentenciaSQL=$conexion->prepare("SELECT * FROM categorias");
+    $sentenciaSQL=$conexion->prepare("SELECT * FROM categorias ORDER BY orden ASC, nombreCtgia ASC");
     $sentenciaSQL->execute();
     $listaCategorias=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -91,6 +95,10 @@
                         <input type="text" name="txtDescCategoria" class="form-control inputForm" placeholder="Descripción de la categoría" value="<?php echo $txtDescCategoria; ?>">
                     </div>
                     
+                    <div class="form-group">
+                        <input type="number" name="txtOrdenCategoria" class="form-control inputForm" placeholder="Orden de la categoría" value="<?php echo $txtOrdenCategoria; ?>">
+                    </div>
+
                     <?php if (!empty($_SESSION['MENSAJE'])): ?>
                         <div class="alert alert-success m-1" role="alert">
                             <?php echo $_SESSION['MENSAJE']; ?>

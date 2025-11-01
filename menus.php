@@ -5,11 +5,11 @@
     include("favoritos.php");
     include("templates/header.php"); 
 
-    $sentencia=$conexion->prepare("SELECT * FROM menus ORDER BY categoriaMenu, nombreMenu");
+    $sentencia = $conexion->prepare("SELECT m.*, c.nombreCtgia FROM menus m LEFT JOIN categorias c ON m.categoriaMenu = c.idCtgia ORDER BY c.nombreCtgia, m.nombreMenu");
     $sentencia->execute();
     $listaMenus=$sentencia->fetchAll(PDO::FETCH_ASSOC);
 
-    $sentenciaSQL=$conexion->prepare("SELECT * FROM categorias");
+    $sentenciaSQL=$conexion->prepare("SELECT * FROM categorias ORDER BY orden ASC, nombreCtgia ASC");
     $sentenciaSQL->execute();
     $listaCategorias=$sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 
@@ -26,40 +26,26 @@
     //Crea el array asociativo de categorías.
     $categoriasDisponibles=[];
     foreach ($listaMenus as $menu) {
-        $categoria=trim($menu['categoriaMenu']);
-        //Si la categoría no existe, se inicializa como un array vacío.
+        $categoria=trim($menu['nombreCtgia']);
         if (!isset($categoriasDisponibles[$categoria])) {
             $categoriasDisponibles[$categoria]=[];
         }
-        //Agrega cada menú dentro del array de su categoría.
         $categoriasDisponibles[$categoria][]=$menu;
     }
 
-    //Establece el orden de categorías y se crea el array asociativo de categorías ordenadas.
-    $ordenDeseado=['Entradas', 'Principales', 'Postres', 'Bebidas'];
+    // Ordena según el "orden" de la base
     $categoriasOrdenadas=[];
+    foreach ($listaCategorias as $categoriaDB) {
+        $nombreCat=trim($categoriaDB['nombreCtgia']);
 
-    //Recorre el array del orden de categorías.
-    foreach ($ordenDeseado as $categoriaDeseada) {
-        //Recorre todas las categorías que vienen de la base de datos
-        foreach ($categoriasDisponibles as $categoriaBD => $menus) {
-            //Compara que coincidan las categorías de la base de datos con las del array del orden (ignora mayúsculas y espacios).
-            if (strtolower(trim($categoriaBD))==strtolower(trim($categoriaDeseada))) {
-                //Copia en orden todos los menús y los elimina de los disponibles.
-                $categoriasOrdenadas[$categoriaDeseada]=$menus;
-                unset($categoriasDisponibles[$categoriaBD]);
-                break;
-            }
+        if (isset($categoriasDisponibles[$nombreCat])) {
+            $categoriasOrdenadas[$nombreCat]=$categoriasDisponibles[$nombreCat];
+        } else {
+            $categoriasOrdenadas[$nombreCat]=[]; // si querés ver categoría vacía
         }
     }
 
-    //Si hay categorías no contempladas en el array del orden deseado dentro de la base de datos, se agregan al final del array asociativo de categorías ordenadas.
-    foreach ($categoriasDisponibles as $categoriaBD => $menus) {
-        $categoriasOrdenadas[$categoriaBD]=$menus;
-    }
-
     //Crea el array asociativo de los textos de cada categoría.
-
     $textosCategorias=[];
     foreach ($listaCategorias as $categoria) {
         $textosCategorias[$categoria['nombreCtgia']]=$categoria['descripcionCtgia'];
