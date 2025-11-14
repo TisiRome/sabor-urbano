@@ -121,6 +121,9 @@ hr {
     background-color: black;
     margin: 0;
 }
+#btnAdministrador {
+    border-radius: var(--radio-borde);
+}
 #btnDorado {
     position: fixed;
     top: 7rem;

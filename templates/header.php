@@ -52,13 +52,13 @@
                     </ul>
 
                     <ul class="navbar-nav">
-                        <?php if (isset($_SESSION['user_id'])): ?>
-                            <li class="nav-item">
-                                <a href="administrador/inicio.php" class="nav-link"><i class="fa-solid fa-arrow-left"></i> Volver al administrador</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="administrador/cerrar.php" class="btn btn-outline-danger nav-link ms-2"><i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar sesión</a>
-                            </li>
+                        <?php if (isset($_SESSION['role'])): ?>
+                            <?php if ($_SESSION['role']==='admin'): ?>
+                                <!--Botón que lleva a la página de menus.php en administrador (vista escritorio)-->
+                                <button id="btnAdministrador" class="btn btn-outline-dark nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminOffcanvas">
+                                    <i class="fa-solid fa-screwdriver-wrench"></i> HERRAMIENTAS
+                                </button>
+                            <?php endif; ?>
                         <?php endif; ?>
 
                         <?php if (!empty($_SESSION['CARRITO'])): ?>
@@ -178,6 +178,27 @@
 
         <div class="offcanvas-footer">
 
+        </div>
+    </div>
+
+    <div id="adminOffcanvas" class="offcanvas offcanvas-end estiloOffcanvas" data-bs-scroll="true" tabindex="-1">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">HERRAMIENTAS DE ADMINISTRADOR</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+
+        <div class="offcanvas-body">
+            <div class="d-flex flex-column gap-2">
+                <a class="btn btn-outline-primary d-none d-md-block" href="administrador/menus.php"><i class="fa-solid fa-pen-to-square"></i> EDITAR MENÚS</a>
+                <a class="btn btn-outline-primary d-none d-md-block" href="administrador/categorias.php"><i class="fa-solid fa-pen-to-square"></i> EDITAR CATEGORÍAS</a>
+            </div>
+        </div>
+
+        <div class="offcanvas-footer">
+            <div class="d-flex flex-column gap-2 m-3">
+                <a href="administrador/inicio.php" class="btn btn-warning btn-md w-100"><i class="fa-solid fa-arrow-left"></i> Volver al administrador</a>
+                <a href="administrador/cerrar.php" class="btn btn-danger btn-md w-100"><i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar sesión</a>
+            </div>
         </div>
     </div>
 
